@@ -3,13 +3,13 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "./../Home/Home";
 import Login from "./../Login/Login";
 import Register from "./../Register/Register";
-import services from "../../services";
+import Service from "../../services";
 
 export default function App() {
   const [initialized, setInitialized] = useState("");
 
   useEffect(() => {
-    services.isInitialized().then(val => {
+    Service.isInitialized().then(val => {
       setInitialized(val);
     });
   });

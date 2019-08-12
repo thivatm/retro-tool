@@ -1,14 +1,23 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./TodoItem.sass";
 
 function TodoItem({ todo, deleteTodo, index }) {
+  const getRandomColor = () => {
+    let code = "0123456789ABCDEF";
+    let color = "#";
+    for (var i = 0; i < 6; i++) {
+      color += code[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  };
   return (
     <div
       className="todo-item"
-      style={{ textDecoration: todo.isCompleted ? "line-through" : "" }}
+      style={{
+        textDecoration: todo.isCompleted ? "line-through" : ""
+      }}
     >
-      <span className="todoTitle">{todo.title}</span>
-      {todo.description}
+      <p>{todo.description}</p>
       <div className="btns">
         <i
           className="material-icons delete"

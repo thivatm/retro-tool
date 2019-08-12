@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import Todos from "../Todos/Todos";
 
-import service from "./../../services";
+import Service from "./../../services";
 
 export default function Home() {
   const [todos, setTodos] = useState([]);
 
   const getTodoList = () => {
-    let ref = service.getTodosList();
+    let ref = Service.getTodosList();
     ref.on("value", snapshot => {
       let todos = snapshot.val();
       let newTodos = [];
@@ -26,12 +26,12 @@ export default function Home() {
     getTodoList();
   });
 
-  const addTodos = (title, description) => {
-    service.addTodo(title, description);
+  const addTodos = description => {
+    Service.addTodo(description);
   };
 
   const deleteTodos = todoId => {
-    service.deleteTodo(todoId);
+    Service.deleteTodo(todoId);
   };
 
   return (

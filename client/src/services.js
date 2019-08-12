@@ -40,9 +40,8 @@ class Service {
     });
   }
 
-  addTodo(title, description) {
+  addTodo(description) {
     const todosObj = {
-      title: title,
       description: description
     };
     const todosRef = this.rdb.ref(`todos/${this.auth.currentUser.uid}`);
