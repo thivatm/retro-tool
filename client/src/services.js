@@ -40,24 +40,33 @@ class Service {
     });
   }
 
-  addTodo(description) {
+  addList(description) {
+    const listRef = this.rdb.ref(`todos/${this.auth.currentUser.uid}/`);
+    const listChildRef = listRef.push();
+
+    listChildRef.push({ description: description });
+  }
+
+  addTodo(listId, description) {
     const todosObj = {
       description: description
     };
-    const todosRef = this.rdb.ref(`todos/${this.auth.currentUser.uid}`);
+    const todosRef = this.rdb.ref(
+      `todos/${this.auth.currentUser.uid}/${listId}/`
+    );
     todosRef.push(todosObj);
   }
 
-  deleteTodo(todoId) {
+  deleteTodo(listId, objId) {
     const todosRef = this.rdb.ref(
-      `todos/${this.auth.currentUser.uid}/${todoId}`
+      `todos/${this.auth.currentUser.uid}/${listId}/${objId}`
     );
     todosRef.remove();
   }
 
   getTodosList() {
     let user = this.auth.currentUser;
-    const todoList = this.rdb.ref(`todos/${user.uid}`);
+    const todoList = this.rdb.ref(`todos/${user.uid}/`);
     return todoList;
   }
 }

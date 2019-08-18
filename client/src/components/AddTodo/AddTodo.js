@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./AddTodo.sass";
 
-function AddTodo({ addTodos }) {
+function AddTodo({ listId, addTodos }) {
   const [description, setDescription] = useState("");
 
   return (
@@ -21,7 +21,7 @@ function AddTodo({ addTodos }) {
 
   function addCard() {
     if (!description) return;
-    addTodos(description);
+    addTodos(listId, description);
     setDescription("");
   }
 }

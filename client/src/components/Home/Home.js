@@ -4,40 +4,56 @@ import Todos from "../Todos/Todos";
 import Service from "./../../services";
 
 export default function Home() {
-  const [todos, setTodos] = useState([]);
+  const [lists, setLists] = useState([]);
 
   const getTodoList = () => {
     let ref = Service.getTodosList();
     ref.on("value", snapshot => {
-      let todos = snapshot.val();
-      let newTodos = [];
-      for (let todo in todos) {
-        newTodos.push({
-          id: todo,
-          title: todos[todo].title,
-          description: todos[todo].description
+      let listSnap = snapshot.val();
+      let newLists = [];
+      for (let list in listSnap) {
+        let newListItems = [];
+        for (let item in listSnap[list]) {
+          newListItems.push({
+            id: item,
+            description: listSnap[list][item].description
+          });
+        }
+        newLists.push({
+          id: list,
+          array: newListItems
         });
       }
-      setTodos(newTodos);
+      setLists(newLists);
+      console.log(newLists);
     });
   };
 
   useEffect(() => {
     getTodoList();
-  });
+  }, []);
 
-  const addTodos = description => {
-    Service.addTodo(description);
+  const addList = description => {
+    Service.addList(description);
   };
 
-  const deleteTodos = todoId => {
-    Service.deleteTodo(todoId);
+  const addTodos = (listId, description) => {
+    Service.addTodo(listId, description);
+  };
+
+  const deleteTodos = (listId, todoId) => {
+    Service.deleteTodo(listId, todoId);
   };
 
   return (
     <div className="App">
       <div className="todo-list">
-        <Todos todos={todos} addTodos={addTodos} deleteTodos={deleteTodos} />
+        <Todos
+          lists={lists}
+          addList={addList}
+          addTodos={addTodos}
+          deleteTodos={deleteTodos}
+        />
       </div>
     </div>
   );
